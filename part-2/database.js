@@ -7,6 +7,7 @@ const listProducts = function(sectionIDorNameNotSureWhichYet) {
 
 const ordersForShopper = function(shopperID) {
   //lists the orders for a given shopper
+  console.log("oh hai!")
 };
 
 const listAllRealShoppers = function() {
