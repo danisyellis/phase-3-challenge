@@ -28,7 +28,6 @@ const formatOutput = function(dataToFormat) {
     }
     console.log(bodyString);
   }
-  //console.log(stringForBorders);
 };
 
 switch(command) {
@@ -36,7 +35,7 @@ switch(command) {
     console.log('|--------------+---------+');
     console.log('| Product Name | Section |');
     console.log('|--------------+---------+');
-    dbFuncs.listProducts(argForCommand)
+    dbFuncs.getProducts(argForCommand)
     .then(data => {
       formatOutput(data);
       console.log('|--------------+---------+');
@@ -52,9 +51,43 @@ switch(command) {
     });
   break;
   case 'shopper-orders':
-    dbFuncs.ordersForShopper();
+    console.log('|----------+------------|\n| order id | total cost |\n|----------+------------|');
+    dbFuncs.getOrdersForShopper(argForCommand)
+    .then(data => {
+      formatOutput(data);
+      console.log('|----------+------------|');
+    })
+    .then(() => {
+      process.exit();
+    })
+    .catch((err) => {
+      console.error(err.message);
+    })
+    .then(() => {
+      process.exit();
+    });
   break;
   case 'real-shoppers':
-    dbFuncs.listAllRealShoppers();
+  console.log("|--------------+------------------|\n| shopper name | number of orders |\n|--------------+------------------|");
+    dbFuncs.getAllRealShoppers()
+    .then(data => {
+      console.log(data)
+
+
+
+
+
+      formatOutput(data);
+      console.log('|--------------+------------------|');
+    })
+    .then(() => {
+      process.exit();
+    })
+    .catch((err) => {
+      console.error(err.message);
+    })
+    .then(() => {
+      process.exit();
+    });
   break;
 }
