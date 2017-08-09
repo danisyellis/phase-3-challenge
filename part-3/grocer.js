@@ -45,6 +45,8 @@ clearButtonEl.addEventListener("click", () => {
   cartItemsListEl.innerHTML = itemsInCart;
   totalPrice = 0;
   totalPriceEl.innerHTML = totalPrice;
+  numberInCart = 0;
+  numberInCartEl.innerHTML = `(${numberInCart})`;
 });
 
 //20: Clicking on the "X" button in the cart modal closes the modal
