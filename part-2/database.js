@@ -24,7 +24,7 @@ const getOrdersForShopper = function(shopperID) {
     db.query(`SELECT orders_products.order_id, SUM(products.price) FROM orders_products
      JOIN products ON (orders_products.product_id = products.id)
      JOIN orders ON (orders_products.order_id = orders.id)
-     WHERE  orders.shopper_id = $1::int
+     WHERE orders.shopper_id = $1::int
      GROUP BY orders_products.order_id`, [shopperID])
     .then(data => {
       resolve(data.rows);
@@ -38,7 +38,10 @@ const getOrdersForShopper = function(shopperID) {
 const getAllRealShoppers = function() {
   //lists the names of all shoppers who have at least 1 order
   return new Promise((resolve, reject) => {
-    db.query('SELECT shopper_id FROM orders')
+    db.query(`SELECT shoppers.name AS "shopper_name", COUNT(orders.id) AS "order_count" FROM shoppers
+    JOIN orders ON (shoppers.id = orders.shopper_id)
+    GROUP BY shoppers.name
+    ORDER BY order_count`)
     .then(data => {
       resolve(data.rows);
     })

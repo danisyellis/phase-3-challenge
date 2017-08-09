@@ -34,3 +34,20 @@ describe("testing shopper-orders", function() {
     .then(data => {expect(data[0].sum).to.equal('44.34');});
   });
 });
+
+describe("real-shoppers", function() {
+  it("returns all shoppers that have made orders", function() {
+    return dbFuncs.getAllRealShoppers()
+    .then(data => {expect(data.length).to.equal(4);});
+  });
+  it("returns the names of shoppers that have made orders", function() {
+    return dbFuncs.getAllRealShoppers()
+    .then(data => {
+      expect(data[0].shopper_name).to.equal("Dax");});
+  });
+  it("also returns the number of orders for each person", function() {
+    return dbFuncs.getAllRealShoppers()
+    .then(data => {
+      expect(data[3].order_count).to.equal('3');});
+  });
+});

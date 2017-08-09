@@ -68,29 +68,12 @@ switch(command) {
     });
   break;
   case 'real-shoppers':
-  let shoppersArray;
   console.log("|--------------+------------------|\n| shopper name | number of orders |\n|--------------+------------------|");
     dbFuncs.getAllRealShoppers()
     .then(data => {
-      const shoppersArray = data;
-      let shoppersObject = {};
-      for(var i=0; i<shoppersArray.length; i++) {
-        //console.log(shoppersArray[i].shopper_id);
-        let shopperID = shoppersArray[i].shopper_id;
-        if (shoppersObject.hasOwnProperty(shopperID)) {
-          //increment by 1
-          shoppersObject[shopperID].numberOfOrders += 1;
-        } else {
-          shoppersObject[shopperID] = 1;
-        }
-      }
-      console.log(shoppersObject);
+      formatOutput(data);
+      console.log('|--------------+------------------|');
     })
-
-
-      //formatOutput(data);
-    //   console.log('|--------------+------------------|');
-    // })
     .then(() => {
       process.exit();
     })
