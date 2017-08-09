@@ -4,17 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha database_test.js",
     "db:build": "npm run db:create && npm run db:setup && npm run db:seed",
     "db:reset": "npm run db:drop && npm run db:build",
-      "db:create": "createdb grocery_store",
-      "db:setup": "psql grocery_store < schema.sql",
-      "db:seed": "psql grocery_store < load-data.sql",
-      "db:drop": "dropdb grocery_store"
+    "db:create": "createdb grocery_store",
+    "db:setup": "psql grocery_store < schema.sql",
+    "db:seed": "psql grocery_store < load-data.sql",
+    "db:drop": "dropdb grocery_store"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chai": "^4.1.1",
+    "mocha": "^3.5.0",
     "pg": "^7.1.0",
     "pg-promise": "^6.3.7"
   }

@@ -20,11 +20,12 @@ const getProducts = function(sectionName) {
 
 const getOrdersForShopper = function(shopperID) {
   //lists the orders for a given shopper
-  //also return an array? of prices of items in the order with that number
-    //let's start by returning every item *
-      //SELECT * FROM orders_products WHERE (join?) order_id = the thing I'm returning
   return new Promise((resolve, reject) => {
-    db.query('SELECT * FROM orders WHERE shopper_id = $1::int', [shopperID])
+    db.query(`SELECT orders_products.order_id, SUM(products.price) FROM orders_products
+     JOIN products ON (orders_products.product_id = products.id)
+     JOIN orders ON (orders_products.order_id = orders.id)
+     WHERE  orders.shopper_id = $1::int
+     GROUP BY orders_products.order_id`, [shopperID])
     .then(data => {
       resolve(data.rows);
     })
@@ -47,16 +48,4 @@ const getAllRealShoppers = function() {
   });
 };
 
-const getShopperNames = function(shopperID) {
-  return new Promise((resolve, reject) => {
-    db.query('SELECT * FROM shoppers WHERE id = $1::int', [shopperID])
-    .then(data => {
-      resolve(data.rows);
-    })
-    .catch(err => {
-      reject(err);
-    });
-  });
-};
-
-module.exports = {getProducts, getOrdersForShopper, getAllRealShoppers, getShopperNames};
+module.exports = {getProducts, getOrdersForShopper, getAllRealShoppers};
